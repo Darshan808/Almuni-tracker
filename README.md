@@ -2,7 +2,7 @@
 A project for Department Of Electronics and Computer Engineering (DOECE), Pulchowk Campus!!!
 
 ### Followed by:<br>
-- Ayusha Pudasaini   079bct030<br>
+- Ayushma Pudasaini   079bct030<br>
 - Binod Pandey       079bct034<br>
 - Darshan Kumar Paudyal 079bct036<br>
 - Mukesh Aryal       079bct047<br>
