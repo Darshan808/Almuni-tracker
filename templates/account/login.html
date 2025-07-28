@@ -1,54 +1,389 @@
-{% extends "account/base_.html" %}
-
+{% extends "account/auth_base.html" %}
 {% load i18n %}
 {% load account socialaccount %}
 
-{% block head_title %}{% trans "Sign In" %}{% endblock %}
+{% block title %}{% trans "Sign In" %} - DOECE Alumni Portal{% endblock %}
 
 {% block content %}
+<div class="row g-0 justify-content-center">
+    <!-- Sign In Section -->
+    <div class="col-lg-6 col-md-8">
+        <div class="auth-section">
+            <h2 class="section-title">
+                <i class="fas fa-sign-in-alt text-primary me-2"></i>
+                Welcome Back
+            </h2>
+            <p class="section-subtitle">Sign in to your alumni account</p>
+            
+            <!-- Display Messages -->
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags|default:'info' }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            
+            <!-- Google Sign In Button -->
+            {% get_providers as socialaccount_providers %}
+            {% if socialaccount_providers %}
+                <div class="socialaccount_ballot">
+                    <ul class="socialaccount_providers list-unstyled">
+                        {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+                    </ul>
+                </div>
+                
+                <div class="divider">
+                    <span>or continue with email</span>
+                </div>
+            {% endif %}
 
-<h1 class="border-bottom mb-4 mt-4">{% trans "Sign In" %}</h1>
-
-{% get_providers as socialaccount_providers %}
-
-{% if socialaccount_providers %}
-<p>
-    {% blocktrans with site.name as site_name %}Please sign in with one
-    of your existing third party accounts. Or, <a href="{{ signup_url }}">sign up</a>
-    for a {{ site_name }} account and sign in below:{% endblocktrans %}
-</p>
-
-<div class="socialaccount_ballot">
-
-    <ul class="socialaccount_providers">
-        {% include "socialaccount/snippets/provider_list.html" with process="login" %}
-    </ul>
-
-    <div class="login-or">{% trans 'or' %}</div>
-
+            <!-- Sign In Form -->
+            <form class="login" method="POST" action="{% url 'account_login' %}">
+                {% csrf_token %}
+                
+                <!-- Email Field -->
+                <div class="form-group">
+                    <label for="id_login" class="field-label">Email</label>
+                    <div class="input-wrapper">
+                        <input type="email" class="form-control {% if form.login.errors %}is-invalid{% endif %}"
+                               id="id_login" name="login" placeholder="Enter your email"
+                               value="{{ form.login.value|default:'' }}" required>
+                    </div>
+                    {% if form.login.errors %}
+                        <div class="invalid-feedback">
+                            {{ form.login.errors.0 }}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <!-- Password Field -->
+                <div class="form-group">
+                    <label for="id_password" class="field-label">Password</label>
+                    <div class="input-wrapper password-wrapper">
+                        <input type="password" class="form-control {% if form.password.errors %}is-invalid{% endif %}"
+                               id="id_password" name="password" placeholder="Enter your password" required>
+                        <button type="button" class="password-toggle" id="togglePassword" onclick="togglePasswordVisibility()">
+                            <i class="fas fa-eye-slash" id="eyeIcon"></i>
+                        </button>
+                    </div>
+                    {% if form.password.errors %}
+                        <div class="invalid-feedback">
+                            {{ form.password.errors.0 }}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <!-- Remember Me & Forgot Password -->
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="id_remember" name="remember" 
+                               {% if form.remember.value %}checked{% endif %}>
+                        <label class="form-check-label" for="id_remember">
+                            {{ form.remember.label|default:"Remember me" }}
+                        </label>
+                    </div>
+                    <a href="{% url 'account_reset_password' %}" class="text-link">
+                        <i class="fas fa-key me-1"></i>
+                        {% trans "Forgot Password?" %}
+                    </a>
+                </div>
+                
+                {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                {% endif %}
+                
+                <!-- Non-field errors -->
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ form.non_field_errors.0 }}
+                    </div>
+                {% endif %}
+                
+                <!-- Sign In Button -->
+                <button class="btn btn-auth w-100 mb-3" type="submit" name="action" value="login">
+                    <i class="fas fa-sign-in-alt me-2"></i>
+                    {% trans "Sign In" %}
+                </button>
+            </form>
+            
+            <div class="text-center">
+                <p class="mb-2">
+                    {% blocktrans %}Don't have an account yet?{% endblocktrans %}
+                </p>
+                <a href="{% url 'account_signup' %}" class="btn btn-outline-primary">
+                    <i class="fas fa-user-plus me-2"></i>
+                    {% trans "Create Account" %}
+                </a>
+            </div>
+            
+            <!-- Additional Help -->
+            <div class="text-center mt-4 pt-3 border-top">
+                <small class="text-muted">
+                    <i class="fas fa-question-circle me-1"></i>
+                    Need help? Contact the alumni office
+                </small>
+            </div>
+        </div>
+    </div>
 </div>
 
-{% include "socialaccount/snippets/login_extra.html" %}
+<style>
+    /* Custom styles for social account buttons */
+    .socialaccount_providers {
+        margin: 0;
+        padding: 0;
+    }
+    
+    .socialaccount_providers li {
+        list-style: none;
+        margin-bottom: 1rem;
+    }
+    
+    .socialaccount_providers a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        background: white;
+        border: 2px solid var(--border-color);
+        color: var(--text-dark);
+        padding: 1rem 2rem;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+    
+    .socialaccount_providers a:hover {
+        border-color: var(--secondary-color);
+        background: var(--light-blue);
+        color: var(--text-dark);
+        text-decoration: none;
+    }
+    
+    .btn-outline-primary {
+        border: 2px solid var(--secondary-color);
+        color: var(--secondary-color);
+        padding: 0.75rem 2rem;
+        border-radius: 12px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-outline-primary:hover {
+        background: var(--secondary-color);
+        border-color: var(--secondary-color);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+    }
+    
+    /* Enhanced field label styling */
+    .field-label {
+        position: relative;
+        display: inline-block;
+    }
+    
+    .field-label::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--secondary-color);
+        transition: width 0.3s ease;
+    }
+    
+    .form-group:focus-within .field-label::after {
+        width: 100%;
+    }
+    
+    .form-group:focus-within .field-label {
+        color: var(--secondary-color);
+    }
+    
+    /* Perfect placeholder animation */
+    .input-wrapper input {
+        position: relative;
+    }
+    
+    .input-wrapper input:not(:placeholder-shown) {
+        border-color: var(--secondary-color);
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+    }
+    
+    .input-wrapper input:focus {
+        animation: focusGlow 0.3s ease-out;
+    }
+    
+    @keyframes focusGlow {
+        0% {
+            box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.3);
+        }
+        50% {
+            box-shadow: 0 0 0 8px rgba(59, 130, 246, 0.1);
+        }
+        100% {
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1), var(--shadow-medium);
+        }
+    }
+    
+    /* Password Toggle Button */
+    .password-wrapper {
+        position: relative;
+    }
+    
+    .password-wrapper input {
+        padding-left: 1rem;
+        padding-right: 3.5rem;
+    }
+    
+    .password-toggle {
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: var(--text-light);
+        font-size: 1.1rem;
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+        z-index: 3;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+    
+    .password-toggle:hover {
+        color: var(--secondary-color);
+        background: rgba(59, 130, 246, 0.1);
+        transform: translateY(-50%) scale(1.1);
+    }
+    
+    .password-toggle:focus {
+        outline: none;
+        color: var(--secondary-color);
+        background: rgba(59, 130, 246, 0.15);
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+    }
+    
+    .password-toggle:active {
+        transform: translateY(-50%) scale(0.95);
+    }
+    
+    .password-toggle i {
+        transition: all 0.3s ease;
+    }
+    
+    .password-toggle.active i {
+        color: var(--secondary-color);
+    }
+</style>
 
-{% else %}
-{%comment%}
-{%endcomment%}
-
-{% endif %}
-
-<form class="login" method="POST" >
-    {% csrf_token %}
-    {{ form.as_p }}
-    {% if redirect_field_value %}
-    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
-    {% endif %}
-    <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
-    <button class="primaryAction btn-sm btn-primary" type="submit" name="submit" value="Login_account">{% trans "Sign In" %}</button>
-</form>
-
-<p style="margin-top: 10px;">
-    {% blocktrans %}If you have not created an account yet, then please
-    <a>sign up</a> first.{% endblocktrans %}<!--href="{{ signup_url }}"-->
-</p>
-
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Form submission handling
+        document.querySelector('form.login').addEventListener('submit', function(e) {
+            const btn = this.querySelector('button[type="submit"]');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Signing In...';
+            btn.disabled = true;
+        });
+        
+        // Auto-focus on first empty field
+        const emailField = document.getElementById('id_login');
+        const passwordField = document.getElementById('id_password');
+        
+        if (!emailField.value) {
+            emailField.focus();
+        } else if (!passwordField.value) {
+            passwordField.focus();
+        }
+        
+        // Enhanced placeholder behavior
+        const inputs = document.querySelectorAll('.input-wrapper input');
+        
+        inputs.forEach(input => {
+            // Store original placeholder
+            const originalPlaceholder = input.getAttribute('placeholder');
+            
+            // Add focus event listener
+            input.addEventListener('focus', function() {
+                // Add a small delay to ensure smooth animation
+                setTimeout(() => {
+                    this.setAttribute('placeholder', '');
+                }, 100);
+            });
+            
+            // Add blur event listener
+            input.addEventListener('blur', function() {
+                if (!this.value) {
+                    this.setAttribute('placeholder', originalPlaceholder);
+                }
+            });
+            
+            // Handle typing - remove placeholder immediately when user starts typing
+            input.addEventListener('input', function() {
+                if (this.value.length > 0) {
+                    this.setAttribute('placeholder', '');
+                } else if (document.activeElement !== this) {
+                    this.setAttribute('placeholder', originalPlaceholder);
+                }
+            });
+        });
+        
+        // Add smooth label animation
+        const formGroups = document.querySelectorAll('.form-group');
+        
+        formGroups.forEach(group => {
+            const input = group.querySelector('input');
+            const label = group.querySelector('.field-label');
+            
+            if (input && label) {
+                input.addEventListener('focus', function() {
+                    label.style.transform = 'scale(1.02)';
+                    label.style.color = 'var(--secondary-color)';
+                });
+                
+                input.addEventListener('blur', function() {
+                    label.style.transform = 'scale(1)';
+                    if (!this.value) {
+                        label.style.color = 'var(--text-dark)';
+                    }
+                });
+            }
+        });
+        
+        // Password toggle functionality - Simple and Working
+        function togglePasswordVisibility() {
+            var passwordField = document.getElementById('id_password');
+            var eyeIcon = document.getElementById('eyeIcon');
+            
+            if (passwordField && eyeIcon) {
+                if (passwordField.type === 'password') {
+                    // Show password
+                    passwordField.type = 'text';
+                    eyeIcon.className = 'fas fa-eye';
+                } else {
+                    // Hide password
+                    passwordField.type = 'password';
+                    eyeIcon.className = 'fas fa-eye-slash';
+                }
+            }
+        }
+        
+        // Add click event to toggle button
+        var toggleButton = document.getElementById('togglePassword');
+        if (toggleButton) {
+            toggleButton.addEventListener('click', togglePasswordVisibility);
+        }
+    });
+</script>
 {% endblock %}

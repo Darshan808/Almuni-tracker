@@ -1,0 +1,289 @@
+{% extends "account/auth_base.html" %}
+{% load i18n %}
+{% load account socialaccount %}
+{% load crispy_forms_tags %}
+
+{% block title %}{% trans "Sign In | Sign Up" %} - DOECE Alumni Portal{% endblock %}
+
+{% block content %}
+<div class="row g-0">
+    <!-- Sign In Section -->
+    <div class="col-lg-6">
+        <div class="auth-section" id="signin-section">
+            <h2 class="section-title">
+                <i class="fas fa-sign-in-alt text-primary me-2"></i>
+                Welcome Back
+            </h2>
+            <p class="section-subtitle">Sign in to your alumni account</p>
+            
+            <!-- Google Sign In Button -->
+            {% get_providers as socialaccount_providers %}
+            {% if socialaccount_providers %}
+                <button type="button" class="btn btn-google w-100">
+                    <i class="fab fa-google"></i>
+                    Sign in with Google
+                </button>
+                
+                <div class="divider">
+                    <span>or continue with email</span>
+                </div>
+            {% endif %}
+
+            <!-- Sign In Form -->
+            <form class="login" method="POST" action="{% url 'account_login' %}" id="signin-form">
+                {% csrf_token %}
+                
+                <!-- Email Field -->
+                <div class="form-group">
+                    <label for="id_login" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="id_login" name="login" placeholder="Enter your email" required>
+                </div>
+                
+                <!-- Password Field -->
+                <div class="form-group">
+                    <label for="id_password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="id_password" name="password" placeholder="Enter your password" required>
+                </div>
+                
+                <!-- Remember Me & Forgot Password -->
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="id_remember" name="remember">
+                        <label class="form-check-label" for="id_remember">
+                            Remember me
+                        </label>
+                    </div>
+                    <a href="{% url 'account_reset_password' %}" class="text-link">
+                        Forgot Password?
+                    </a>
+                </div>
+                
+                {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                {% endif %}
+                
+                <!-- Sign In Button -->
+                <button class="btn btn-auth w-100 mb-3" type="submit" name="action" value="login">
+                    <i class="fas fa-sign-in-alt me-2"></i>
+                    Sign In
+                </button>
+            </form>
+            
+            <p class="text-center">
+                Don't have an account? 
+                <a href="#" class="text-link" onclick="switchToSignup()">
+                    Create one here
+                </a>
+            </p>
+        </div>
+    </div>
+    
+    <!-- Section Divider -->
+    <div class="d-none d-lg-block col-lg-1">
+        <div class="section-divider h-100"></div>
+    </div>
+    
+    <!-- Sign Up Section -->
+    <div class="col-lg-5">
+        <div class="auth-section" id="signup-section">
+            <h2 class="section-title">
+                <i class="fas fa-user-plus text-primary me-2"></i>
+                Join Us
+            </h2>
+            <p class="section-subtitle">Create your alumni account</p>
+            
+            <!-- Sign Up Form -->
+            <form class="signup" method="POST" action="{% url 'account_signup' %}" id="signup-form">
+                {% csrf_token %}
+                
+                <!-- Academic Information -->
+                <div class="form-group-title">
+                    <i class="fas fa-graduation-cap me-2"></i>
+                    Academic Information
+                </div>
+                
+                <!-- Program Dropdown -->
+                <div class="form-floating">
+                    <i class="fas fa-book input-icon"></i>
+                    <select class="form-select" id="id_program" name="program" required>
+                        <option value="">Choose Program</option>
+                        <option value="BE">Bachelor of Engineering (BE)</option>
+                        <option value="ME">Master of Engineering (ME)</option>
+                        <option value="MSC">Master of Science (MSc)</option>
+                        <option value="PHD">Doctor of Philosophy (PhD)</option>
+                    </select>
+                    <label for="id_program">Program</label>
+                </div>
+                
+                <!-- Batch Year -->
+                <div class="form-floating">
+                    <i class="fas fa-calendar input-icon"></i>
+                    <input type="text" class="form-control" id="id_batch" name="batch" placeholder="Batch (e.g., 2078)" required>
+                    <label for="id_batch">Batch Year (BS)</label>
+                </div>
+                
+                <!-- Roll Number -->
+                <div class="form-floating">
+                    <i class="fas fa-id-card input-icon"></i>
+                    <input type="text" class="form-control" id="id_roll_number" name="roll_number" placeholder="Roll Number" required>
+                    <label for="id_roll_number">Roll Number</label>
+                </div>
+                
+                <!-- Personal Information -->
+                <div class="form-group-title">
+                    <i class="fas fa-user me-2"></i>
+                    Personal Information
+                </div>
+                
+                <!-- Last Name -->
+                <div class="form-floating">
+                    <i class="fas fa-user input-icon"></i>
+                    <input type="text" class="form-control" id="id_last_name" name="last_name" placeholder="Last Name" required>
+                    <label for="id_last_name">Last Name</label>
+                </div>
+                
+                <!-- Date of Birth (Nepali Calendar) -->
+                <div class="form-floating">
+                    <i class="fas fa-calendar-alt input-icon"></i>
+                    <input type="text"
+                           class="form-control nepali-datepicker"
+                           id="id_date_of_birth_bs"
+                           name="date_of_birth_bs"
+                           placeholder="MM/DD/YYYY"
+                           data-allow-ad="true"
+                           autocomplete="bday"
+                           aria-describedby="dob-help"
+                           required>
+                    <label for="id_date_of_birth_bs">
+                        <i class="fas fa-calendar-alt me-1"></i>
+                        Date of Birth (in BS)*
+                    </label>
+                    <div id="dob-help" class="form-text">
+                        <small class="text-muted">
+                            <i class="fas fa-info-circle me-1"></i>
+                            Click to open Nepali calendar picker • Supports BS/AD conversion
+                        </small>
+                    </div>
+                </div>
+                
+                <!-- Email -->
+                <div class="form-floating">
+                    <i class="fas fa-envelope input-icon"></i>
+                    <input type="email" class="form-control" id="id_email" name="email" placeholder="Email Address" required>
+                    <label for="id_email">Email Address</label>
+                </div>
+                
+                <!-- Account Security -->
+                <div class="form-group-title">
+                    <i class="fas fa-shield-alt me-2"></i>
+                    Account Security
+                </div>
+                
+                <!-- Password -->
+                <div class="form-floating">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input type="password" class="form-control" id="id_password1" name="password1" placeholder="Password" required>
+                    <label for="id_password1">Password</label>
+                    <div class="password-strength">
+                        <div class="password-strength-bar"></div>
+                    </div>
+                </div>
+                
+                <!-- Confirm Password -->
+                <div class="form-floating">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input type="password" class="form-control" id="id_password2" name="password2" placeholder="Confirm Password" required>
+                    <label for="id_password2">Confirm Password</label>
+                </div>
+                
+                {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                {% endif %}
+                
+                <!-- Terms Agreement -->
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" id="id_terms" name="terms" required>
+                    <label class="form-check-label" for="id_terms">
+                        I agree to the <a href="#" class="text-link">Terms of Service</a> and 
+                        <a href="#" class="text-link">Privacy Policy</a>
+                    </label>
+                </div>
+                
+                <!-- Sign Up Button -->
+                <button class="btn btn-auth w-100 mb-3" type="submit" name="action" value="signup">
+                    <i class="fas fa-user-plus me-2"></i>
+                    Create Account
+                </button>
+            </form>
+            
+            <p class="text-center">
+                Already have an account? 
+                <a href="#" class="text-link" onclick="switchToSignin()">
+                    Sign in here
+                </a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<script>
+    function switchToSignup() {
+        document.getElementById('signin-section').style.display = 'none';
+        document.getElementById('signup-section').style.display = 'block';
+        
+        // On mobile, this will show the signup section
+        if (window.innerWidth < 992) {
+            document.querySelector('.col-lg-6').style.display = 'none';
+            document.querySelector('.col-lg-5').style.display = 'block';
+        }
+    }
+    
+    function switchToSignin() {
+        document.getElementById('signup-section').style.display = 'none';
+        document.getElementById('signin-section').style.display = 'block';
+        
+        // On mobile, this will show the signin section
+        if (window.innerWidth < 992) {
+            document.querySelector('.col-lg-5').style.display = 'none';
+            document.querySelector('.col-lg-6').style.display = 'block';
+        }
+    }
+    
+    // Password confirmation validation
+    document.addEventListener('DOMContentLoaded', function() {
+        const password1 = document.getElementById('id_password1');
+        const password2 = document.getElementById('id_password2');
+        
+        function validatePasswordMatch() {
+            if (password1.value && password2.value) {
+                if (password1.value !== password2.value) {
+                    password2.setCustomValidity('Passwords do not match');
+                    password2.classList.add('is-invalid');
+                } else {
+                    password2.setCustomValidity('');
+                    password2.classList.remove('is-invalid');
+                    password2.classList.add('is-valid');
+                }
+            }
+        }
+        
+        password1.addEventListener('input', validatePasswordMatch);
+        password2.addEventListener('input', validatePasswordMatch);
+        
+        // Form submission handling
+        document.getElementById('signin-form').addEventListener('submit', function(e) {
+            // Add loading state
+            const btn = this.querySelector('button[type="submit"]');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Signing In...';
+            btn.disabled = true;
+        });
+        
+        document.getElementById('signup-form').addEventListener('submit', function(e) {
+            // Add loading state
+            const btn = this.querySelector('button[type="submit"]');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Creating Account...';
+            btn.disabled = true;
+        });
+    });
+</script>
+{% endblock %}
