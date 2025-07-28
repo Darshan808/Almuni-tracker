@@ -1,62 +1,831 @@
-{% extends "records/base.html" %} {% load static %} {% load crispy_forms_tags %}
+{% extends "records/base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block content_left %}
+<!-- Full-screen Hero Section -->
+<div class="hero-container">
+    <!-- Background with overlay -->
+    <div class="hero-background">
+        <div class="hero-overlay"></div>
+    </div>
+    
+    <!-- Main content -->
+    <div class="hero-content">
+        <div class="container-fluid h-100">
+            <div class="row h-100 align-items-center">
+                <!-- Left side - Main content -->
+                <div class="col-lg-7 col-md-6">
+                    <div class="hero-text">
+                        <!-- Emotional Banner Message -->
+                        <div class="emotional-banner">
+                            <div class="banner-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <div class="banner-message">
+                                <h2 class="banner-title">"Once an Engineer, Always a Part of the Family."</h2>
+                                <p class="banner-subtitle">Reconnect with your roots. Track your journey.</p>
+                            </div>
+                        </div>
+                        
+                        <h1 class="hero-title">
+                            Welcome to the Alumni Portal for DOECE
+                            <div class="title-underline"></div>
+                        </h1>
+                        
+                        <p class="hero-description">
+                            Join us in celebrating decades of excellence, connection, and innovation.
+                            Explore the yearbook, update your information, and reconnect with the DOECE alumni family.
+                        </p>
+                        
+                        <div class="cta-buttons">
+                            <a href="#yearbook" class="btn btn-primary-gradient">
+                                <i class="fas fa-book-open"></i>
+                                View Yearbook
+                            </a>
+                            <a href="{% url 'alumni-login' %}" class="btn btn-secondary-gradient">
+                                <i class="fas fa-user-edit"></i>
+                                Update Info
+                            </a>
+                            <a href="https://www.facebook.com/groups/329629637950764/" class="btn btn-tertiary-gradient" target="_blank">
+                                <i class="fab fa-facebook-f"></i>
+                                Join Facebook Group
+                            </a>
+                        </div>
+                        
+                        <div class="stats-section">
+                            <div class="stat-item">
+                                <div class="stat-number">25+</div>
+                                <div class="stat-label">Years of Excellence</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">1000+</div>
+                                <div class="stat-label">Alumni Network</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">100+</div>
+                                <div class="stat-label">Companies</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right side - Department image -->
+                <div class="col-lg-5 col-md-6">
+                    <div class="hero-image-container">
+                        <div class="blob-shape">
+                            <img src="{% static 'pictures/college.png' %}" alt="DOECE Department" class="department-image">
+                        </div>
+                        <div class="floating-elements">
+                            <div class="floating-icon icon-1"><i class="fas fa-microchip"></i></div>
+                            <div class="floating-icon icon-2"><i class="fas fa-laptop-code"></i></div>
+                            <div class="floating-icon icon-3"><i class="fas fa-robot"></i></div>
+                            <div class="floating-icon icon-4"><i class="fas fa-network-wired"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scroll indicator -->
+    <div class="scroll-indicator">
+        <div class="scroll-text">Scroll to explore</div>
+        <div class="scroll-arrow">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block content %}
+<!-- Yearbook Section -->
+<div class="yearbook-section" id="yearbook">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="yearbook-card">
+                    <div class="card-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-graduation-cap"></i>
+                            View Your Yearbook
+                        </h2>
+                        <p class="section-subtitle">Find your memories and classmates from your graduation year</p>
+                    </div>
+                    
+                    <div class="card-body">
+                        {% crispy form %}
+                    </div>
+                    
+                    <div class="card-footer">
+                        <div class="diploma-notice">
+                            <i class="fas fa-certificate"></i>
+                            <span>Records of Diploma alumni are available <a href="{% static 'doece_diploma.pdf' %}" class="download-link">here</a></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="features-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Connect & Network</h3>
+                    <p>Build meaningful relationships with fellow alumni across different batches and industries.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h3>Career Opportunities</h3>
+                    <p>Discover job openings, mentorship programs, and career advancement opportunities.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3>Alumni Events</h3>
+                    <p>Stay updated on reunions, networking events, and department celebrations.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <style>
-    b {
-        font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+    :root {
+        --primary-blue: #1e40af;
+        --secondary-blue: #3b82f6;
+        --deep-violet: #6366f1;
+        --soft-violet: #8b5cf6;
+        --soft-gray: #64748b;
+        --light-gray: #f1f5f9;
+        --white: #ffffff;
+        --gradient-primary: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #6366f1 100%);
+        --gradient-secondary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+        --gradient-tertiary: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+        --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.1);
+        --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.15);
+        --shadow-heavy: 0 15px 50px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Remove default margins */
+    body, html {
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+    }
+
+    /* Hero Container */
+    .hero-container {
+        position: relative;
+        min-height: 100vh;
+        overflow: hidden;
+    }
+
+    /* Background */
+    .hero-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80') center/cover no-repeat;
+        background-attachment: fixed;
+        z-index: -2;
+    }
+
+    .hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, 
+            rgba(30, 64, 175, 0.9) 0%, 
+            rgba(59, 130, 246, 0.8) 50%, 
+            rgba(99, 102, 241, 0.7) 100%);
+        z-index: -1;
+    }
+
+    /* Hero Content */
+    .hero-content {
+        position: relative;
+        z-index: 1;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        padding: 2rem 0;
+    }
+
+    .hero-text {
+        color: white;
+        animation: fadeInUp 1s ease-out;
+    }
+
+    /* Emotional Banner */
+    .emotional-banner {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(20px);
+        border-radius: 20px;
+        padding: 1.5rem 2rem;
+        margin-bottom: 3rem;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        animation: fadeInUp 1.5s ease-out 0.5s backwards;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .emotional-banner::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+        animation: shimmerBanner 3s infinite;
+    }
+
+    @keyframes shimmerBanner {
+        0% { left: -100%; }
+        100% { left: 100%; }
+    }
+
+    .banner-icon {
+        flex-shrink: 0;
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.1));
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        color: #ffd700;
+        border: 2px solid rgba(255, 215, 0, 0.3);
+        box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); }
+        50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(255, 215, 0, 0.5); }
+    }
+
+    .banner-message {
+        flex: 1;
+        text-align: left;
+    }
+
+    .banner-title {
+        font-size: 1.8rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        background: linear-gradient(135deg, #ffd700 0%, #ffed4e 50%, #ffffff 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        line-height: 1.3;
+        font-style: italic;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .banner-subtitle {
+        font-size: 1.1rem;
+        color: rgba(255, 255, 255, 0.9);
+        margin: 0;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+    }
+
+    .hero-title {
+        font-size: 3.5rem;
+        font-weight: 800;
+        line-height: 1.2;
+        margin-bottom: 2rem;
+        position: relative;
+        background: linear-gradient(135deg, #ffffff 0%, #e0e7ff 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .title-underline {
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 100px;
+        height: 4px;
+        background: var(--gradient-tertiary);
+        border-radius: 2px;
+        animation: expandWidth 2s ease-out 0.5s forwards;
+        transform-origin: left;
+        transform: scaleX(0);
+        box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+    }
+
+    @keyframes expandWidth {
+        to { transform: scaleX(1); }
+    }
+
+    .hero-description {
+        font-size: 1.3rem;
+        line-height: 1.6;
+        margin-bottom: 3rem;
+        opacity: 0.95;
+        max-width: 600px;
+    }
+
+    /* CTA Buttons */
+    .cta-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 4rem;
+    }
+
+    .btn {
+        padding: 1rem 2rem;
+        border-radius: 50px;
+        border: none;
+        font-weight: 600;
+        font-size: 1rem;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+        box-shadow: var(--shadow-soft);
+    }
+
+    .btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: left 0.5s;
+    }
+
+    .btn:hover::before {
+        left: 100%;
+    }
+
+    .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-heavy);
+    }
+
+    .btn-primary-gradient {
+        background: var(--gradient-primary);
+        color: white;
+    }
+
+    .btn-secondary-gradient {
+        background: var(--gradient-secondary);
+        color: white;
+    }
+
+    .btn-tertiary-gradient {
+        background: var(--gradient-tertiary);
+        color: white;
+    }
+
+    /* Stats Section */
+    .stats-section {
+        display: flex;
+        gap: 3rem;
+        margin-top: 2rem;
+    }
+
+    .stat-item {
+        text-align: center;
+    }
+
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: white;
+        line-height: 1;
+    }
+
+    .stat-label {
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.8);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-top: 0.5rem;
+    }
+
+    /* Hero Image */
+    .hero-image-container {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        animation: fadeInRight 1s ease-out 0.3s backwards;
+    }
+
+    .blob-shape {
+        position: relative;
+        width: 400px;
+        height: 400px;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(20px);
+        border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+        animation: morphing 8s ease-in-out infinite;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: var(--shadow-heavy);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform: rotate(-10deg);
+    }
+
+    @keyframes morphing {
+        0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+        50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+        100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+    }
+
+    .department-image {
+        width: 300px;
+        height: 300px;
+        object-fit: cover;
+        border-radius: 20px;
+        box-shadow: var(--shadow-medium);
+        transform: rotate(10deg);
+    }
+
+    /* Floating Icons */
+    .floating-elements {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+    }
+
+    .floating-icon {
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(10px);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        color: white;
+        animation: float 6s ease-in-out infinite;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .icon-1 { top: 10%; left: 10%; animation-delay: 0s; }
+    .icon-2 { top: 20%; right: 10%; animation-delay: 1.5s; }
+    .icon-3 { bottom: 20%; left: 5%; animation-delay: 3s; }
+    .icon-4 { bottom: 10%; right: 15%; animation-delay: 4.5s; }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-20px) rotate(10deg); }
+    }
+
+    /* Scroll Indicator */
+    .scroll-indicator {
+        position: absolute;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        color: white;
+        animation: bounce 2s infinite;
+    }
+
+    .scroll-text {
+        font-size: 0.9rem;
+        margin-bottom: 0.5rem;
+        opacity: 0.8;
+    }
+
+    .scroll-arrow {
+        font-size: 1.2rem;
+    }
+
+    @keyframes bounce {
+        0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+        40% { transform: translateX(-50%) translateY(-10px); }
+        60% { transform: translateX(-50%) translateY(-5px); }
+    }
+
+    /* Yearbook Section */
+    .yearbook-section {
+        padding: 5rem 0;
+        background: linear-gradient(135deg, var(--light-gray) 0%, white 100%);
+    }
+
+    .yearbook-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: var(--shadow-medium);
+        overflow: hidden;
+        border: 1px solid rgba(99, 102, 241, 0.1);
+    }
+
+    .card-header {
+        background: var(--gradient-primary);
+        color: white;
+        padding: 2rem;
+        text-align: center;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .section-subtitle {
+        opacity: 0.9;
+        margin: 0;
+    }
+
+    .card-body {
+        padding: 2rem;
+    }
+
+    .card-footer {
+        background: rgba(99, 102, 241, 0.05);
+        padding: 1.5rem 2rem;
+        text-align: center;
+    }
+
+    .diploma-notice {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        color: var(--soft-gray);
+    }
+
+    .download-link {
+        color: var(--secondary-blue);
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .download-link:hover {
+        text-decoration: underline;
+    }
+
+    /* Features Section */
+    .features-section {
+        padding: 5rem 0;
+        background: white;
+    }
+
+    .feature-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 15px;
+        text-align: center;
+        box-shadow: var(--shadow-soft);
+        border: 1px solid rgba(99, 102, 241, 0.1);
+        transition: all 0.3s ease;
+        height: 100%;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-medium);
+    }
+
+    .feature-icon {
+        width: 80px;
+        height: 80px;
+        background: var(--gradient-primary);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        color: white;
+        font-size: 2rem;
+    }
+
+    .feature-card h3 {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: var(--primary-blue);
+        margin-bottom: 1rem;
+    }
+
+    .feature-card p {
+        color: var(--soft-gray);
+        line-height: 1.6;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeInRight {
+        from {
+            opacity: 0;
+            transform: translateX(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2.5rem;
+        }
+        
+        .hero-description {
+            font-size: 1.1rem;
+        }
+        
+        .cta-buttons {
+            flex-direction: column;
+            align-items: stretch;
+        }
+        
+        .stats-section {
+            justify-content: center;
+            gap: 2rem;
+        }
+        
+        .blob-shape {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .department-image {
+            width: 220px;
+            height: 220px;
+        }
+        
+        .floating-icon {
+            width: 40px;
+            height: 40px;
+            font-size: 1rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .hero-title {
+            font-size: 2rem;
+        }
+        
+        .stats-section {
+            gap: 1rem;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+        }
+    }
+
+    /* Smooth scrolling */
+    html {
+        scroll-behavior: smooth;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: var(--light-gray);
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: var(--gradient-primary);
+        border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: var(--primary-blue);
     }
 </style>
 
-{% block content_left %}
-<div class="col-md-12 d-flex justify-content-center text-center">
-    <div class="content-section border-5" style="border-radius: 10px">
-        <legend class="border-bottom mb-4 mt-2">
-            <b style="font-size: 1.5rem; font-weight: 700"
-                >Welcome to the Alumni Portal for DOECE</b
-            >
-        </legend>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Parallax effect
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const background = document.querySelector('.hero-background');
+            if (background) {
+                background.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
 
-        <img
-            class="img-fluid w-100"
-            src="{% static 'pictures/college.png' %}"
-        />
-        <br /><br />
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
 
-        The Department of Electronics and Computer Engineering organized a
-        celebration program to mark the 25th year of BE program in our
-        department.y
-        <br />
-        An alumni year book was released on that occasion which can be
-        downloaded <a href="">here</a> {# <br /><br />To view your yearbook,
-        enter program and batch in the alongside form.#} {# <br />#} {# You can
-        update your info <a href="{% url 'alumni-login' %}">here</a>#}
-        <br /><br />
-        For Facebook group of DOECE Alumni, click
-        <a href="https://www.facebook.com/groups/329629637950764/">here</a>
-    </div>
-</div>
-{% endblock %} {% block content %}
-<div class="col-md-12 d-flex justify-content-center text-center">
-    <div class="content-section" style="border-radius: 10px">
-        <legend class="border-bottom mb-2 mt-2">
-            <b>View Your Yearbook</b>
-        </legend>
-        <br />
-        {% crispy form %}
-        <hr />
-        <b
-            >Records of Diploma alumni are available
-            <a href="{% static 'doece_diploma.pdf' %}">here</a></b
-        >
-        <br />
-        <hr />
-        <!-- <legend class="border-bottom mb-2 mt-2">
-                <b>View/Update your information</b>
-            </legend>
-                <-- Do you want to view or update your information?<br>
-                Login below: -->
-        <!-- <div style="text-align:center;">
-                <a href="{% url 'alumni-login' %}" class="btn btn-primary">Login</a>
-            </div> -->
-    </div>
-</div>
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+
+        // Observe feature cards
+        document.querySelectorAll('.feature-card').forEach(card => {
+            observer.observe(card);
+        });
+
+        // Counter animation for stats
+        function animateCounter(element, target) {
+            let current = 0;
+            const increment = target / 100;
+            const timer = setInterval(() => {
+                current += increment;
+                element.textContent = Math.floor(current) + '+';
+                if (current >= target) {
+                    element.textContent = target + '+';
+                    clearInterval(timer);
+                }
+            }, 20);
+        }
+
+        // Animate stats when they come into view
+        const statsObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const numbers = entry.target.querySelectorAll('.stat-number');
+                    numbers.forEach(number => {
+                        const target = parseInt(number.textContent);
+                        animateCounter(number, target);
+                    });
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        const statsSection = document.querySelector('.stats-section');
+        if (statsSection) {
+            statsObserver.observe(statsSection);
+        }
+    });
+</script>
 {% endblock %}

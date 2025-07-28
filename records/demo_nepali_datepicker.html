@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Nepali Date Picker Demo</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Nepali Date Picker Styles -->
+    <link rel="stylesheet" type="text/css" href="static/nepali-datepicker.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #dbeafe 0%, #ffffff 50%, #dbeafe 100%);
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 py-12">
+    <div class="max-w-2xl mx-auto px-4">
+        <div class="bg-white rounded-2xl shadow-xl p-8">
+            <div class="text-center mb-8">
+                <h1 class="text-3xl font-bold text-gray-900 mb-2">
+                    <i class="fas fa-calendar-alt text-blue-500 mr-2"></i>
+                    Enhanced Nepali Date Picker
+                </h1>
+                <p class="text-gray-600">Bikram Sambat Calendar with Modern UI</p>
+            </div>
+            
+            <!-- Demo Form -->
+            <form class="space-y-6">
+                <!-- Date of Birth Field -->
+                <div class="space-y-2">
+                    <label for="demo_dob" class="block text-sm font-medium text-gray-700">
+                        <i class="fas fa-calendar-alt mr-1 text-blue-500"></i>
+                        Date of Birth (in BS)*
+                    </label>
+                    <div class="relative">
+                        <input type="text"
+                               class="nepali-datepicker w-full px-4 py-3 pr-12 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-white text-gray-900 placeholder-gray-500"
+                               id="demo_dob"
+                               name="demo_dob"
+                               placeholder="MM/DD/YYYY"
+                               data-allow-ad="true"
+                               autocomplete="bday"
+                               required>
+                    </div>
+                    <p class="text-xs text-gray-500 flex items-center">
+                        <i class="fas fa-info-circle mr-1 text-blue-400"></i>
+                        Click to open Nepali calendar picker • Supports BS/AD conversion
+                    </p>
+                </div>
+                
+                <!-- Join Date Field -->
+                <div class="space-y-2">
+                    <label for="demo_join" class="block text-sm font-medium text-gray-700">
+                        <i class="fas fa-calendar-check mr-1 text-green-500"></i>
+                        Join Date (in BS)
+                    </label>
+                    <div class="relative">
+                        <input type="text"
+                               class="nepali-datepicker w-full px-4 py-3 pr-12 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all duration-200 bg-white text-gray-900 placeholder-gray-500"
+                               id="demo_join"
+                               name="demo_join"
+                               placeholder="MM/DD/YYYY"
+                               data-allow-ad="false">
+                    </div>
+                    <p class="text-xs text-gray-500 flex items-center">
+                        <i class="fas fa-info-circle mr-1 text-green-400"></i>
+                        BS calendar only (no AD conversion)
+                    </p>
+                </div>
+                
+                <!-- Event Date Field -->
+                <div class="space-y-2">
+                    <label for="demo_event" class="block text-sm font-medium text-gray-700">
+                        <i class="fas fa-star mr-1 text-purple-500"></i>
+                        Event Date (in BS)
+                    </label>
+                    <div class="relative">
+                        <input type="text"
+                               class="nepali-datepicker w-full px-4 py-3 pr-12 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200 bg-white text-gray-900 placeholder-gray-500"
+                               id="demo_event"
+                               name="demo_event"
+                               placeholder="MM/DD/YYYY"
+                               data-allow-ad="true">
+                    </div>
+                    <p class="text-xs text-gray-500 flex items-center">
+                        <i class="fas fa-info-circle mr-1 text-purple-400"></i>
+                        Full featured with BS/AD toggle
+                    </p>
+                </div>
+                
+                <!-- Submit Button -->
+                <div class="pt-4">
+                    <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold py-3 px-6 rounded-lg transition duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                        <i class="fas fa-check mr-2"></i>
+                        Submit Demo
+                    </button>
+                </div>
+            </form>
+            
+            <!-- Features List -->
+            <div class="mt-12 pt-8 border-t border-gray-200">
+                <h2 class="text-xl font-semibold text-gray-900 mb-4">Features</h2>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="flex items-start space-x-3">
+                        <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                        <div>
+                            <h3 class="font-medium text-gray-900">Accurate BS Calendar</h3>
+                            <p class="text-sm text-gray-600">Proper Bikram Sambat calendar with accurate days per month</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <i class="fas fa-mobile-alt text-blue-500 mt-1"></i>
+                        <div>
+                            <h3 class="font-medium text-gray-900">Mobile Responsive</h3>
+                            <p class="text-sm text-gray-600">Optimized for all device sizes with touch-friendly interface</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <i class="fas fa-exchange-alt text-purple-500 mt-1"></i>
+                        <div>
+                            <h3 class="font-medium text-gray-900">BS/AD Conversion</h3>
+                            <p class="text-sm text-gray-600">Optional toggle between Bikram Sambat and Gregorian calendars</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <i class="fas fa-universal-access text-orange-500 mt-1"></i>
+                        <div>
+                            <h3 class="font-medium text-gray-900">Accessible</h3>
+                            <p class="text-sm text-gray-600">Full keyboard navigation and screen reader support</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <i class="fas fa-language text-indigo-500 mt-1"></i>
+                        <div>
+                            <h3 class="font-medium text-gray-900">Nepali Digits</h3>
+                            <p class="text-sm text-gray-600">Display dates in Nepali numerals (देवनागरी)</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <i class="fas fa-paint-brush text-pink-500 mt-1"></i>
+                        <div>
+                            <h3 class="font-medium text-gray-900">Modern Design</h3>
+                            <p class="text-sm text-gray-600">Beautiful UI with Tailwind CSS styling and animations</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nepali Date Picker Script -->
+    <script src="static/nepali-datepicker.js"></script>
+    
+    <script>
+        // Demo form submission
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            // Show results
+            alert(`Demo Submission:\n\nDate of Birth: ${data.demo_dob || 'Not selected'}\nJoin Date: ${data.demo_join || 'Not selected'}\nEvent Date: ${data.demo_event || 'Not selected'}`);
+        });
+        
+        // Add some demo interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Enhanced Nepali Date Picker Demo Loaded');
+            console.log('Features:');
+            console.log('• Accurate BS calendar data');
+            console.log('• Mobile responsive design');
+            console.log('• BS/AD conversion support');
+            console.log('• Keyboard accessibility');
+            console.log('• Nepali digit display');
+            console.log('• Modern Tailwind CSS styling');
+        });
+    </script>
+</body>
+</html>
