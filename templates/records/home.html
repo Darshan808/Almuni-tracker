@@ -43,12 +43,6 @@
         <br />
         {% crispy form %}
         <hr />
-        <b
-            >Records of Diploma alumni are available
-            <a href="{% static 'doece_diploma.pdf' %}">here</a></b
-        >
-        <br />
-        <hr />
         <!-- <legend class="border-bottom mb-2 mt-2">
                 <b>View/Update your information</b>
             </legend>
@@ -58,5 +52,52 @@
                 <a href="{% url 'alumni-login' %}" class="btn btn-primary">Login</a>
             </div> -->
     </div>
+
+
+<!-- Global Search Form -->
+        <legend class="border-bottom mb-2 mt-4 mb-2">
+            <b>Alumni Search</b>
+        </legend>
+        <br />
+<div class="col-md-12 d-flex justify-content-center">
+    <form class="p-4" style="max-width: 700px; width: 100%;" method="get">
+        <div class="row g-3">
+            <div class="col-md-6 pb-4">
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="searchName" placeholder="Name" name="name">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-floating pb-4">
+                    <input type="text" class="form-control" id="searchOrg" placeholder="Organization" name="currently_employed_organization">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="searchUniv" placeholder="University" name="university">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="searchCountry" placeholder="Country" name="country">
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center mt-4">
+            <button class="btn btn-lg btn-primary px-5" type="submit">
+                Search
+            </button>
+        </div>
+    </form>
 </div>
+
+<hr />
+<b>Records of Diploma alumni are available
+            <a href="{% static 'doece_diploma.pdf' %}">here</a></b
+        >
+        <br />
+        <hr />
+
+</div>
+
 {% endblock %}
