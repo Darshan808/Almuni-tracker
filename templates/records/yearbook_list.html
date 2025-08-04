@@ -85,13 +85,10 @@
           {% if student.recent_passport_size_photo %}
               <div class="float-left article-img">
                   <img style="height: 100%; transform: translateX(-50%);margin-left: 50%;" class="rounded-circle" src="{{ student.recent_passport_size_photo.url }}">
-
               </div>
           {% else %}
-{#            <img class="rounded-circle article-img" src="{{ MEDIA_URL }}pictures/default_user.png">#}
-{#            <img class="rounded-circle article-img" src="{% static 'pictures/default_user.png' %}">#}
               <div class="float-left article-img">
-                  <img style="height: 100%; transform: translateX(-50%);margin-left: 50%;" class="rounded-circle" src="{% static 'pictures/default_user.png' %}">
+                  <img style="height: 100%; transform: translateX(-50%);margin-left: 50%;" class="rounded-circle" src="{{ MEDIA_URL }}pictures/default_user.png">
               </div>
           {% endif %}
         {% spaceless %}

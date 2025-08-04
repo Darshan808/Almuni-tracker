@@ -50,6 +50,52 @@ def record_home(request):
             )
         else:
             messages.warning(request, f'No records for given year and program')
+    elif request.method == "GET":
+        # Check if this GET request has search parameters (form was submitted)
+        search_params = ['name', 'currently_employed_organization', 'university', 'country']
+        has_search_params = any(param in request.GET for param in search_params)
+        
+        if has_search_params:
+            
+            # Access individual parameters:
+            name = request.GET.get('name', '')
+            organization = request.GET.get('currently_employed_organization', '')
+            university = request.GET.get('university', '')
+            country = request.GET.get('country', '')
+            
+            # Build Q objects for filtering (excluding country for now)
+            filters = Q()
+            
+            if name:
+                filters &= Q(first_name__icontains=name) | Q(last_name__icontains=name)
+            if organization:
+                filters &= Q(currently_employed_organization__icontains=organization)
+            if university:
+                filters &= Q(has_further_academic_statuses__institution__icontains=university)
+
+            # Apply initial filters
+            students = Student.objects.filter(filters).distinct()
+            
+            # Handle country filtering separately
+            if country:
+                # Get all students and filter by country manually
+                country_filtered_students = []
+                for student in students:
+                    addresses = student.has_addresses.all()
+                    for address in addresses:
+                        # Check both country code and country name
+                        if (country.upper() in str(address.country).upper() or 
+                            country.lower() in address.country.name.lower()):
+                            country_filtered_students.append(student.pk)
+                            break  # Found match, no need to check other addresses
+                
+                # Filter the queryset to only include students with matching countries
+                students = students.filter(pk__in=country_filtered_students)
+
+            context['students'] = students
+            return render(request, 'records/yearbook_list.html', context)
+        else:
+            form = YearbookViewForm()
     else:
         form = YearbookViewForm()
     context = {
@@ -57,7 +103,6 @@ def record_home(request):
     }
 
     return render(request, 'records/home.html', context)
-
 
 class YearbookListView(ListView):
     model = Student
@@ -82,7 +127,6 @@ class YearbookListView(ListView):
                 #if there are more get parameters after page(in future), but not used now
                 url_get_part[1] = url_get_part[1].split('&',1)[-1]
             if len(url_get_part[0])>0 and (not url_get_part[0][-1] =='&') :
-                print("hey")
                 url_get_part[0] = url_get_part[0]+'&'
 
         context['current_url_get'] = url_get_part[0]

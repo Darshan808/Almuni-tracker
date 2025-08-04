@@ -7,6 +7,14 @@ A project for Department Of Electronics and Computer Engineering (DOECE), Pulcho
 - Darshan Kumar Paudyal 079bct036<br>
 - Mukesh Aryal       079bct047<br>
 
+### Added Features:<br>
+- Data updated up to the 080 batch, ensuring the latest alumni information is included.
+- Filtering functionality is now available at a global level, allowing users to search and filter alumni records across all batches from a single interface.
+
+### TODOs:<br>
+- Develop a dedicated page for each alumni profile.
+- Improve and debug the login and signup system.
+
 ### Followed by:<br>
 - Aashish Karki   078bct004<br>
 - Arbashu Dhakal  078bct018<br>
