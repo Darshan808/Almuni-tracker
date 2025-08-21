@@ -111,7 +111,7 @@ FurtherAcademicStatusFormSet = inlineformset_factory(
 class AlumniForm(forms.ModelForm):
     class Meta:
         model = Student
-        exclude = ['uploader', 'date_added', 'is_alumni',]
+        exclude = ['uploader', 'date_added', 'is_alumni', 'user-account']
         labels = {
             'dob_bs': 'Date Of Birth (in BS)',
             'recent_cv': 'Recent CV',
