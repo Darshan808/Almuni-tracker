@@ -13,7 +13,7 @@ A project for Department Of Electronics and Computer Engineering (DOECE), Pulcho
 
 ### TODOs:<br>
 - Develop a dedicated page for each alumni profile.
-- Improve and debug the login and signup system.
+- Improve and debug the login and signup system. (For more details -> https://github.com/Darshan808/Almuni-tracker/issues/4)
 
 ### Followed by:<br>
 - Aashish Karki   078bct004<br>
